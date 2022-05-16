@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form.js';
 
-import { Button, Card, Elevation, FormGroup, InputGroup  } from '@blueprintjs/core';
+import {
+  Button,
+  Card,
+  Elevation,
+  FormGroup,
+  InputGroup,
+} from '@blueprintjs/core';
 
 import { useContext } from 'react';
 
@@ -105,60 +111,69 @@ const ToDo = () => {
 
   return (
     <>
-    <FormGroup>
-      <form onSubmit={handleSubmit}>
-        <h2>Add To Do Item</h2>
-        <Card className='formCard' interactive={true} elevation={Elevation.TWO}>
-        <label>
-          <span>To Do Item</span>
-          <InputGroup
-            onChange={handleChange}
-            name='text'
-            type='text'
-            placeholder='Item Details'
-          />
-        </label>
+      <FormGroup>
+        <form onSubmit={handleSubmit}>
+          <h2>Add To Do Item</h2>
+          <Card
+            className='formCard'
+            interactive={true}
+            elevation={Elevation.TWO}
+          >
+            <label>
+              <span>To Do Item</span>
+              <InputGroup
+                onChange={handleChange}
+                name='text'
+                type='text'
+                placeholder='Item Details'
+              />
+            </label>
 
-        <label>
-          <span>Assigned To</span>
-          <InputGroup
-            onChange={handleChange}
-            name='assignee'
-            type='text'
-            placeholder='Assignee Name'
-          />
-        </label>
-
-        <label>
-          <span>Difficulty</span>
-          <input
-            onChange={handleChange}
-            defaultValue={3}
-            type='range'
-            min={1}
-            max={5}
-            name='difficulty'
-          />
-        </label>
-
-        <label>
-        <Button type='submit'>add item</Button>
-        </label>
-
-      <span onClick={toggleDisplay}>
-        display Completed Items : {display.display ? 'on' : 'off'}
-      </span>{' '}
-        <span onClick={(e) => sort.setSortBy(e.target.innerText)}>name</span>{' '}
-        <span onClick={(e) => sort.setSortBy(e.target.innerText)}>
-          complete
-        </span>
-        <Button onClick={sortList}>sort</Button>
-        </Card>
-       
-      </form>
+            <label>
+              <span>Assigned To</span>
+              <InputGroup
+                onChange={handleChange}
+                name='assignee'
+                type='text'
+                placeholder='Assignee Name'
+              />
+            </label>
+            <div className='settings'>
+              <div>
+                <label>
+                  <span>Difficulty</span>
+                  <input
+                    onChange={handleChange}
+                    defaultValue={3}
+                    type='range'
+                    min={1}
+                    max={5}
+                    name='difficulty'
+                  />
+                </label>
+                <label>
+                  <Button type='submit'>add item</Button>
+                </label>
+              </div>
+              <div className='displaySettings'>
+                <label>
+                  <span onClick={toggleDisplay}>
+                    Display Completed Items : {display.display ? 'on' : 'off'}
+                  </span>
+                </label>
+                <span onClick={(e) => sort.setSortBy(e.target.innerText)}>
+                  name
+                </span>
+                <span onClick={(e) => sort.setSortBy(e.target.innerText)}>
+                  complete
+                </span>
+                <Button onClick={sortList}>sort</Button>
+              </div>
+            </div>
+          </Card>
+        </form>
       </FormGroup>
-      <div>
-      </div>
+      <div></div>
       {display.display
         ? currentList.map((item) => (
             <Card key={item.id}>
@@ -172,7 +187,7 @@ const ToDo = () => {
               <div onClick={() => toggleComplete(item.id)}>
                 Complete: {item.complete.toString()}
               </div>
-              <Button onClick={()=>deleteItem(item.id)}>X</Button>
+              <Button onClick={() => deleteItem(item.id)}>X</Button>
             </Card>
           ))
         : currentList

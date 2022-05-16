@@ -5,3 +5,17 @@
   width:30%;
   height:100%;
 }
+.settings{
+  display:flex;
+  flex-direction: column;
+}
+.displaySettings{
+  display:flex;
+  flex-direction:column;
+}
+.displaySettings span{
+  margin:0 5px;
+}
+.displaySettings span:hover{
+  border: 1px;
+}
