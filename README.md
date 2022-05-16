@@ -12,5 +12,5 @@ Todo App is a web application the enables the user to create a todo list and ass
 ## UML
 ![UML](./assets/ToDoAppUML.png);
 
-## [PR link](https://github.com/Mhsalameh/resty/pull/8);
-## [live URL]
+## [PR link](https://github.com/Mhsalameh/resty/pull/3);
+## [live URL]()
