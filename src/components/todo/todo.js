@@ -107,7 +107,7 @@ const ToDo = () => {
         : 0
     );
     console.log(sort.sortBy);
-  }, [list, pageCount, itemOffset, sort.sortBy, display.display]);
+  }, [list, pageCount, itemOffset, sort.sortBy, display.display,incomplete,itemsPerPage.num]);
 
   return (
     <>
