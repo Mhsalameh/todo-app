@@ -12,8 +12,10 @@ export default function Main(props) {
         <ItemsNumSettings>
           <SortSettings>
             <ItemsCompletedSettings>
+              <div id='main'>
               <Header />
-              <ToDo />
+              <ToDo  />
+              </div>
             </ItemsCompletedSettings>
           </SortSettings>
         </ItemsNumSettings>

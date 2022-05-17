@@ -5,7 +5,7 @@ export const ItemsNumContext = React.createContext();
 
 export default function ItemsNumSettings(props){
 
-const [num,setNum] = useState(3);
+const [num,setNum] = useState(4);
 
 const state = {num, setNum};
 
