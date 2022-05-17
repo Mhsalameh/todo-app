@@ -1,21 +1,97 @@
 @import "~normalize.css";
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
-.formCard{
-  width:30%;
+body{
+  background-color: #393E46;
+  color : #EEEEEE;
+}
+#main{
+  display:block;
+  width:100%;
+}
+#root{
+  width:100%;
+  height:80vh;
+  margin:0;
+  padding:0;
+}
+/* #todo{
+  display:flex;
+  flex-direction: column;
+} */
+#todo-card{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #EEEEEE;
+  color: #00ADB5;
+  height:40vh;
+  width:90%;
+}
+#item-card{
+  width: 50%;
+  margin:6px;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:flex-start;
+  padding: 0;;
+}
+#form-component{
+  background-color: #EEEEEE;
+  color: #00ADB5;
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  flex: 0 0 100%;
+  width:100%;
   height:100%;
+  margin:0;
+}
+#todo-pagination{
+  display:flex;
+  flex-direction: column;
+  width:80%;
+  height:100%;
+}
+#form-component #form,form{
+  height:100%;
+}
+#form-card{
+  width:100%;
+  height:100%;
+  background-color: #EEEEEE;
+  color: #00ADB5;
+}
+#site-header,h2{
+  text-align: center;
 }
 .settings{
   display:flex;
   flex-direction: column;
+  justify-content: space-around;
 }
 .displaySettings{
   display:flex;
-  flex-direction:column;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.displaySettings span{
-  margin:0 5px;
+
+#paginate ul{
+  background-color: #00ADB5;
+  padding:9px;
+  display:flex;
+  justify-content:space-between;
+  list-style-type: none;
+  color: #222831;
+
 }
-.displaySettings span:hover{
-  border: 1px;
+#paginate ul li a{
+  background-color: #00ADB5;
+  color: #222831;
+  margin:0;
+  padding:8px;
 }

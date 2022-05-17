@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import useForm from '../../hooks/form.js';
-
-import {
-  Button,
-  Card,
-  Elevation,
-  FormGroup,
-  InputGroup,
-} from '@blueprintjs/core';
-
+import List from '../list/list';
+import Form from '../form/form';
 import { useContext } from 'react';
 
 import { ItemsCompletedContext } from '../../context/itemsCompleted';
@@ -33,7 +25,6 @@ const ToDo = () => {
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState(list);
   //   const [incomplete, setIncomplete] = useState([]);
-  const { handleChange, handleSubmit } = useForm(addItem);
 
   function addItem(item) {
     console.log(item);
@@ -45,10 +36,6 @@ const ToDo = () => {
   function deleteItem(id) {
     const items = list.filter((item) => item.id !== id);
     setList(items);
-  }
-
-  function toggleDisplay() {
-    display.setDisplay(display.display ? false : true);
   }
 
   function toggleComplete(id) {
@@ -71,6 +58,7 @@ const ToDo = () => {
   };
 
   function sortList() {
+    sort.setSortBy(sort.sortBy);
     switch (sort.sortBy) {
       case 'name':
         setList(list.sort((a, b) => a.assignee.localeCompare(b.assignee)));
@@ -80,7 +68,7 @@ const ToDo = () => {
         break;
 
       default:
-        break;
+        setList(list.sort((a, b) => (b.complete ? 1 : -1)));
     }
 
     console.log(list);
@@ -107,115 +95,53 @@ const ToDo = () => {
         : 0
     );
     console.log(sort.sortBy);
-  }, [list, pageCount, itemOffset, sort.sortBy, display.display,incomplete,itemsPerPage.num]);
+  }, [
+    list,
+    pageCount,
+    itemOffset,
+    sort.sortBy,
+    display.display,
+    incomplete,
+    itemsPerPage.num,
+  ]);
 
   return (
     <>
-      <FormGroup>
-        <form onSubmit={handleSubmit}>
-          <h2>Add To Do Item</h2>
-          <Card
-            className='formCard'
-            interactive={true}
-            elevation={Elevation.TWO}
-          >
-            <label>
-              <span>To Do Item</span>
-              <InputGroup
-                onChange={handleChange}
-                name='text'
-                type='text'
-                placeholder='Item Details'
-              />
-            </label>
-
-            <label>
-              <span>Assigned To</span>
-              <InputGroup
-                onChange={handleChange}
-                name='assignee'
-                type='text'
-                placeholder='Assignee Name'
-              />
-            </label>
-            <div className='settings'>
-              <div>
-                <label>
-                  <span>Difficulty</span>
-                  <input
-                    onChange={handleChange}
-                    defaultValue={3}
-                    type='range'
-                    min={1}
-                    max={5}
-                    name='difficulty'
+      <div id="form-component">
+          <Form sortList={sortList} addItem={addItem} />
+        <div id='todo-pagination'>
+          {list[0]? <div id='todo-card'>
+            {display.display
+              ? currentList.map((item) => (
+                  <List
+                    item={item}
+                    toggleComplete={toggleComplete}
+                    deleteItem={deleteItem}
                   />
-                </label>
-                <label>
-                  <Button type='submit'>add item</Button>
-                </label>
-              </div>
-              <div className='displaySettings'>
-                <label>
-                  <span onClick={toggleDisplay}>
-                    Display Completed Items : {display.display ? 'on' : 'off'}
-                  </span>
-                </label>
-                <span onClick={(e) => sort.setSortBy(e.target.innerText)}>
-                  name
-                </span>
-                <span onClick={(e) => sort.setSortBy(e.target.innerText)}>
-                  complete
-                </span>
-                <Button onClick={sortList}>sort</Button>
-              </div>
-            </div>
-          </Card>
-        </form>
-      </FormGroup>
-      <div></div>
-      {display.display
-        ? currentList.map((item) => (
-            <Card key={item.id}>
-              <p>{item.text}</p>
-              <p>
-                <small>Assigned to: {item.assignee}</small>
-              </p>
-              <p>
-                <small>Difficulty: {item.difficulty}</small>
-              </p>
-              <div onClick={() => toggleComplete(item.id)}>
-                Complete: {item.complete.toString()}
-              </div>
-              <Button onClick={() => deleteItem(item.id)}>X</Button>
-            </Card>
-          ))
-        : currentList
-            .filter((item) => !item.complete)
-            .map((item) => (
-              <Card key={item.id}>
-                <p>{item.text}</p>
-                <p>
-                  <small>Assigned to: {item.assignee}</small>
-                </p>
-                <p>
-                  <small>Difficulty: {item.difficulty}</small>
-                </p>
-                <div onClick={() => toggleComplete(item.id)}>
-                  Complete: {item.complete.toString()}
-                </div>
-                <hr />
-              </Card>
-            ))}
-      <ReactPaginate
-        breakLabel='...'
-        nextLabel='next >'
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={pageCount}
-        pageCount={pageCount}
-        previousLabel='< previous'
-        renderOnZeroPageCount={null}
-      />
+                ))
+              : currentList
+                  .filter((item) => !item.complete)
+                  .map((item) => (
+                    <List
+                      item={item}
+                      toggleComplete={toggleComplete}
+                      deleteItem={deleteItem}
+                    />
+                  ))}
+          </div>:''}
+        </div>
+      </div>
+      <div id='paginate'>
+          <ReactPaginate
+            breakLabel='...'
+            nextLabel='next >'
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={pageCount}
+            pageCount={pageCount}
+            previousLabel='< previous'
+            renderOnZeroPageCount={null}
+          />
+          </div>
     </>
   );
 };
