@@ -3,28 +3,28 @@ import List from '../list/list';
 import Form from '../form/form';
 import { useContext } from 'react';
 
-import { ItemsCompletedContext } from '../../context/itemsCompleted';
-import { DisplayContext } from '../../context/display.js';
+// import { ItemsCompletedContext } from '../../context/itemsCompleted';
+// import { DisplayContext } from '../../context/display.js';
+// import { ItemsNumContext } from '../../context/itemsNum';
+// import { SortContext } from '../../context/sort.js';
 
-import { ItemsNumContext } from '../../context/itemsNum';
-
+import { SettingsContext} from '../../context/settings';
 import ReactPaginate from 'react-paginate';
 
-import { SortContext } from '../../context/sort.js';
 
 import { v4 as uuid } from 'uuid';
 
 const ToDo = () => {
-  const incomplete = useContext(ItemsCompletedContext);
-  const display = useContext(DisplayContext);
-  const itemsPerPage = useContext(ItemsNumContext);
-  const sort = useContext(SortContext);
+  const settings = useContext(SettingsContext);
+  // const incomplete = useContext(ItemsCompletedContext);
+  // const display = useContext(DisplayContext);
+  // const itemsPerPage = useContext(ItemsNumContext);
+  // const sort = useContext(SortContext);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState(list);
-  //   const [incomplete, setIncomplete] = useState([]);
 
   function addItem(item) {
     console.log(item);
@@ -50,7 +50,7 @@ const ToDo = () => {
   }
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage.num) % list.length;
+    const newOffset = (event.selected * settings.num) % list.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
@@ -58,8 +58,8 @@ const ToDo = () => {
   };
 
   function sortList() {
-    sort.setSortBy(sort.sortBy);
-    switch (sort.sortBy) {
+    settings.setSortBy(settings.sortBy);
+    switch (settings.sortBy) {
       case 'name':
         setList(list.sort((a, b) => a.assignee.localeCompare(b.assignee)));
         break;
@@ -76,33 +76,33 @@ const ToDo = () => {
 
   useEffect(() => {
     let incompleteCount = list.filter((item) => !item.complete).length;
-    incomplete.setIncomplete(incompleteCount);
-    document.title = `To Do List: ${incomplete.incomplete}`;
-    const endOffset = itemOffset + itemsPerPage.num;
+    settings.setIncomplete(incompleteCount);
+    document.title = `To Do List: ${settings.incomplete}`;
+    const endOffset = itemOffset + settings.num;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentList(
-      display.display
+      settings.display
         ? list.slice(itemOffset, endOffset)
         : list.filter((item) => !item.complete).slice(itemOffset, endOffset)
     );
     setPageCount(
-      itemsPerPage.num > 0
+      settings.num > 0
         ? Math.ceil(
-            display.display
-              ? list.length / itemsPerPage.num
-              : incomplete.incomplete / itemsPerPage.num
+            settings.display
+              ? list.length / settings.num
+              : settings.incomplete / settings.num
           )
         : 0
     );
-    console.log(sort.sortBy);
+    console.log(settings.sortBy);
   }, [
     list,
     pageCount,
     itemOffset,
-    sort.sortBy,
-    display.display,
-    incomplete,
-    itemsPerPage.num,
+    settings.sortBy,
+    settings.display,
+    settings,
+    settings.num,
   ]);
 
   return (
@@ -111,7 +111,7 @@ const ToDo = () => {
           <Form sortList={sortList} addItem={addItem} />
         <div id='todo-pagination'>
           {list[0]? <div id='todo-card'>
-            {display.display
+            {settings.display
               ? currentList.map((item) => (
                   <List
                     item={item}

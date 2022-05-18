@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { ItemsCompletedContext } from '../../context/itemsCompleted';
+import { SettingsContext } from '../../context/settings';
 
 export default function Header() {
-  const incomplete = useContext(ItemsCompletedContext);
+  const settings = useContext(SettingsContext);
   return (
     <header id='site-header'>
-      <h1>To Do List: {incomplete.incomplete} items pending</h1>
+      <h1>To Do List: {settings.incomplete} items pending</h1>
     </header>
   );
 }
