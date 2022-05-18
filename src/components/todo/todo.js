@@ -23,7 +23,7 @@ const ToDo = () => {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(JSON.parse(localStorage.getItem('list'))||[]);
   const [currentList, setCurrentList] = useState(list);
 
   function addItem(item) {
@@ -31,11 +31,16 @@ const ToDo = () => {
     item.id = uuid();
     item.complete = false;
     setList([...list, item]);
+    console.log(list)
   }
 
   function deleteItem(id) {
+    if(!list[1]){
+      localStorage.setItem('list',JSON.stringify([]))
+    }
     const items = list.filter((item) => item.id !== id);
     setList(items);
+    
   }
 
   function toggleComplete(id) {
@@ -57,8 +62,8 @@ const ToDo = () => {
     setItemOffset(newOffset);
   };
 
-  function sortList() {
-    settings.setSortBy(settings.sortBy);
+  function sortList(e) {
+    settings.setSortBy(e.target.innerText);
     switch (settings.sortBy) {
       case 'name':
         setList(list.sort((a, b) => a.assignee.localeCompare(b.assignee)));
@@ -104,6 +109,18 @@ const ToDo = () => {
     settings,
     settings.num,
   ]);
+  useEffect(()=>{
+    if(list[0]){
+    localStorage.setItem('list',JSON.stringify(list));
+    }
+  },[list])
+  useEffect(() => {
+    let data = localStorage.getItem('list');
+    let parsedData = JSON.parse(data);
+    if(parsedData){
+      setList(parsedData);
+    }
+  },[])
 
   return (
     <>
@@ -117,6 +134,8 @@ const ToDo = () => {
                     item={item}
                     toggleComplete={toggleComplete}
                     deleteItem={deleteItem}
+                    setItemOffset={setItemOffset}
+                    listLen={list.length}
                   />
                 ))
               : currentList
@@ -126,6 +145,8 @@ const ToDo = () => {
                       item={item}
                       toggleComplete={toggleComplete}
                       deleteItem={deleteItem}
+                      setItemOffset={setItemOffset}
+                      listLen={list.length}
                     />
                   ))}
           </div>:''}

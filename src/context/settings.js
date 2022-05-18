@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 
 export const SettingsContext = React.createContext();
 
@@ -7,6 +7,8 @@ export default function Settings(props) {
   const [num, setNum] = useState(4);
   const [sortBy, setSortBy] = useState('');
   const [incomplete, setIncomplete] = useState([]);
+  // const [localStorage,setLocalStorage] = useState({});
+
 
   const state = {
     display,
@@ -19,6 +21,17 @@ export default function Settings(props) {
     setIncomplete,
   };
 
+useEffect(()=>{
+  let data = localStorage.getItem('settings');
+  let parsedData = JSON.parse(data);
+  console.log(parsedData);
+  if(parsedData){
+    setNum(parsedData.num)
+    setDisplay(parsedData.display)
+    setSortBy(parsedData.sortBy)
+    setIncomplete(parsedData.incomplete)
+  }
+},[])
   return (
     <SettingsContext.Provider value={state}>
       {props.children}
