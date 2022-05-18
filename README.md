@@ -8,12 +8,16 @@ Todo App is a web application the enables the user to create a todo list and ass
   - a user can sort the task by name or by completetion
   - a user can delete the task
   - a user is can display only the incompleted tasks
+ 
+ - phase 2: added local storage
+  - a user can now save his current settings to use later on
+  - a user save his to do list, and it will render even after refresh
 
 ## UML
 
 ![UML](./assets/ToDoAppUML.png);
 
-## [PR link](https://github.com/Mhsalameh/todo-app/pull/4)
+## [PR link](https://github.com/Mhsalameh/todo-app/pull/5)
 
 ## [live URL](https://coruscating-marigold-6319f2.netlify.app/)
 
