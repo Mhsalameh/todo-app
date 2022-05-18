@@ -9,15 +9,17 @@ import {
   AnchorButton,
 } from '@blueprintjs/core';
 import { useContext } from 'react';
-import { DisplayContext } from '../../context/display.js';
-import { SortContext } from '../../context/sort';
+// import { DisplayContext } from '../../context/display.js';
+// import { SortContext } from '../../context/sort';
+import {SettingsContext} from '../../context/settings'
 import useForm from '../../hooks/form.js';
 
 export default function Form(props) {
-  const display = useContext(DisplayContext);
-  const sort = useContext(SortContext);
+  const settings= useContext(SettingsContext);
+  // const display = useContext(DisplayContext);
+  // const sort = useContext(SortContext);
   function toggleDisplay() {
-    display.setDisplay(display.display ? false : true);
+    settings.setDisplay(settings.display ? false : true);
   }
   const { handleChange, handleSubmit } = useForm(props.addItem);
 
@@ -69,16 +71,16 @@ export default function Form(props) {
               <div className='displaySettings'>
                 <label>
                   <Switch
-                    checked={display.display}
+                    checked={settings.display}
                     label='show complete'
                     onChange={toggleDisplay}
                   />
                 </label>
                 <ButtonGroup>
-                <Button outlined='true' minimal='true' onClick={(e) => sort.setSortBy(e.target.innerText)}>
+                <Button outlined='true' minimal='true' onClick={(e) => settings.setSortBy(e.target.innerText)}>
                   name
                 </Button>
-                <Button outlined='true' minimal='true' onClick={(e) => sort.setSortBy(e.target.innerText)}>
+                <Button outlined='true' minimal='true' onClick={(e) => settings.setSortBy(e.target.innerText)}>
                   complete
                 </Button>
                 </ButtonGroup>
