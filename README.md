@@ -14,7 +14,7 @@ Todo App is a web application the enables the user to create a todo list and ass
 ![UML](./assets/ToDoAppUML.png);
 
 
-## [PR link](https://github.com/Mhsalameh/todo-app/pull/3)
+## [PR link](https://github.com/Mhsalameh/todo-app/pull/4)
 ## [live URL](https://coruscating-marigold-6319f2.netlify.app/)
 
 ## How the global state is consumed by the components
