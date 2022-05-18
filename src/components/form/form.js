@@ -5,9 +5,7 @@ import {
   InputGroup,
   Switch,
   Elevation,
-  ButtonGroup,
-  AnchorButton,
-} from '@blueprintjs/core';
+  ButtonGroup} from '@blueprintjs/core';
 import { useContext } from 'react';
 // import { DisplayContext } from '../../context/display.js';
 // import { SortContext } from '../../context/sort';
@@ -15,6 +13,7 @@ import {SettingsContext} from '../../context/settings'
 import useForm from '../../hooks/form.js';
 
 export default function Form(props) {
+  
   const settings= useContext(SettingsContext);
   // const display = useContext(DisplayContext);
   // const sort = useContext(SortContext);
@@ -22,6 +21,13 @@ export default function Form(props) {
     settings.setDisplay(settings.display ? false : true);
   }
   const { handleChange, handleSubmit } = useForm(props.addItem);
+  function handlePagesNum(e){
+    settings.setNum(parseInt(e.target.value));
+  }
+
+function saveToLocalStorage(){
+  localStorage.setItem('settings',JSON.stringify(settings))
+}
 
   return (
     <>
@@ -76,15 +82,27 @@ export default function Form(props) {
                     onChange={toggleDisplay}
                   />
                 </label>
+                <label>
+                  <span>sort by:</span>
                 <ButtonGroup>
-                <Button outlined='true' minimal='true' onClick={(e) => settings.setSortBy(e.target.innerText)}>
+                <Button outlined='true' minimal='true' onClick={props.sortList}>
                   name
                 </Button>
-                <Button outlined='true' minimal='true' onClick={(e) => settings.setSortBy(e.target.innerText)}>
+                <Button outlined='true' minimal='true' onClick={props.sortList}>
                   complete
                 </Button>
                 </ButtonGroup>
-                <AnchorButton intent='primary' onClick={props.sortList}>sort</AnchorButton>
+                </label>
+                <label>
+                  <span>items per page</span>
+                  <InputGroup
+                onChange={handlePagesNum}
+                name='assignee'
+                type='number'
+                placeholder={settings.num}
+              />
+                </label>
+                <Button onClick={saveToLocalStorage}>Save Settings</Button>
               </div>
             </div>
           </Card>
