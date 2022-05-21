@@ -24,7 +24,6 @@ export default function Settings(props) {
 useEffect(()=>{
   let data = localStorage.getItem('settings');
   let parsedData = JSON.parse(data);
-  console.log(parsedData);
   if(parsedData){
     setNum(parsedData.num)
     setDisplay(parsedData.display)
