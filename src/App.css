@@ -22,48 +22,89 @@ body{
 #todo-card{
   display:flex;
   flex-direction: column;
-  align-items:center;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  align-items:stretch;
+  justify-content: flex-start;
   background-color: #EEEEEE;
   color: #00ADB5;
-  height:40vh;
+  height:auto;
   width:90%;
 }
+#header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 #item-card{
-  width: 50%;
-  margin:6px;
+  width: auto;
+  margin:10px;
+  height:100%;
   display:flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content:space-between;
   align-items:flex-start;
-  padding: 0;;
+  padding: 0;
+}
+#signup{
+  display: flex;
+  align-items:center;
+}
+#items-contents{
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+  width:100%;
+  height:80%;
+  justify-content:space-around
+}
+#item-details{
+  font-size:large;
+  align-self: center;
+}
+/* #signup-inputs{
+  display:flex;
+  flex-direction: column;
+} */
+#user-info{
+  display:flex;
+  flex-direction: column;
 }
 #form-component{
   background-color: #EEEEEE;
   color: #00ADB5;
   display:flex;
   justify-content:space-between;
-  align-items: center;
+  align-items:stretch;
   flex: 0 0 100%;
   width:100%;
-  height:100%;
+  height:80vh;
   margin:0;
 }
 #todo-pagination{
   display:flex;
-  flex-direction: column;
+  align-items:stretch;
   width:80%;
-  height:100%;
+  height:auto;
+}
+#theForm{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 #form-component #form,form{
   height:100%;
 }
+
+.bp4-form-group{
+margin-top:10px;
+}
+.bp4-form-content{
+  height:auto;
+}
 #form-card{
-  width:100%;
   height:100%;
   background-color: #EEEEEE;
   color: #00ADB5;
+  margin-right: 5px;
 }
 #site-header,h2{
   text-align: center;

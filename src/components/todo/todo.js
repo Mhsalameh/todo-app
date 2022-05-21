@@ -2,36 +2,23 @@ import React, { useEffect, useState } from 'react';
 import List from '../list/list';
 import Form from '../form/form';
 import { useContext } from 'react';
-
-// import { ItemsCompletedContext } from '../../context/itemsCompleted';
-// import { DisplayContext } from '../../context/display.js';
-// import { ItemsNumContext } from '../../context/itemsNum';
-// import { SortContext } from '../../context/sort.js';
-
 import { SettingsContext} from '../../context/settings';
 import ReactPaginate from 'react-paginate';
-
-
 import { v4 as uuid } from 'uuid';
-
+import { LoginContext } from '../../context/login';
+import {When} from 'react-if';
 const ToDo = () => {
   const settings = useContext(SettingsContext);
-  // const incomplete = useContext(ItemsCompletedContext);
-  // const display = useContext(DisplayContext);
-  // const itemsPerPage = useContext(ItemsNumContext);
-  // const sort = useContext(SortContext);
+  const protect = useContext(LoginContext);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-
   const [list, setList] = useState(JSON.parse(localStorage.getItem('list'))||[]);
   const [currentList, setCurrentList] = useState(list);
-
+  
   function addItem(item) {
-    console.log(item);
     item.id = uuid();
     item.complete = false;
     setList([...list, item]);
-    console.log(list)
   }
 
   function deleteItem(id) {
@@ -45,7 +32,7 @@ const ToDo = () => {
 
   function toggleComplete(id) {
     const items = list.map((item) => {
-      if (item.id === id) {
+      if (item.id === id && protect.authorize('update')) {
         item.complete = !item.complete;
       }
       return item;
@@ -76,7 +63,6 @@ const ToDo = () => {
         setList(list.sort((a, b) => (b.complete ? 1 : -1)));
     }
 
-    console.log(list);
   }
 
   useEffect(() => {
@@ -99,7 +85,6 @@ const ToDo = () => {
           )
         : 0
     );
-    console.log(settings.sortBy);
   }, [
     list,
     pageCount,
@@ -126,6 +111,7 @@ const ToDo = () => {
     <>
       <div id="form-component">
           <Form sortList={sortList} addItem={addItem} />
+          <When condition = {protect.authorize('read')}>
         <div id='todo-pagination'>
           {list[0]? <div id='todo-card'>
             {settings.display
@@ -151,6 +137,7 @@ const ToDo = () => {
                   ))}
           </div>:''}
         </div>
+          </When>
       </div>
       <div id='paginate'>
           <ReactPaginate
