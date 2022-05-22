@@ -3,19 +3,40 @@
 Todo App is a web application the enables the user to create a todo list and assign it to someone.
 
 - phase 1: the base of todo app.
+
   - a user can add a new task
   - a user can assign that task to name
   - a user can sort the task by name or by completetion
   - a user can delete the task
   - a user is can display only the incompleted tasks
- 
- - phase 2: added local storage
+
+- phase 2: added local storage
+
   - a user can now save his current settings to use later on
   - a user save his to do list, and it will render even after refresh
 
+- phase 3: added authorization and authentication
+  - a user can now creat new users with different roles
+  - a user can now log in with a signedup username and password
+  - conneted to an authentication-api that handles signup and signin
+  - a user with admin role can:
+    - create a new task
+    - delete the task
+    - edit the completetion of the task
+    - and read the available tasks
+  - a user with editor role can:
+    - create a new task
+    - edit the completetion of the task
+    - read the available tasks
+  - a user wtih writer role can:
+    - create a new task
+    - read the available tasks
+  - a user wtih user role can:
+    - read the available tasks
+
 ## UML
 
-![UML](./assets/ToDoAppUML.png);
+![UML](./assets/ToDoAppUML2.png);
 
 ## [PR link](https://github.com/Mhsalameh/todo-app/pull/5)
 

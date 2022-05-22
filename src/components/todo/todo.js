@@ -6,7 +6,8 @@ import { SettingsContext} from '../../context/settings';
 import ReactPaginate from 'react-paginate';
 import { v4 as uuid } from 'uuid';
 import { LoginContext } from '../../context/login';
-import {When} from 'react-if';
+import Auth from '../auth/auth';
+
 const ToDo = () => {
   const settings = useContext(SettingsContext);
   const protect = useContext(LoginContext);
@@ -111,7 +112,7 @@ const ToDo = () => {
     <>
       <div id="form-component">
           <Form sortList={sortList} addItem={addItem} />
-          <When condition = {protect.authorize('read')}>
+          <Auth action = 'read'>
         <div id='todo-pagination'>
           {list[0]? <div id='todo-card'>
             {settings.display
@@ -137,7 +138,7 @@ const ToDo = () => {
                   ))}
           </div>:''}
         </div>
-          </When>
+          </Auth>
       </div>
       <div id='paginate'>
           <ReactPaginate

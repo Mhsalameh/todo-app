@@ -1,15 +1,12 @@
 import {Card,Button,Tag} from '@blueprintjs/core';
-import {LoginContext} from '../../context/login';
-import { When } from "react-if";
-import { useContext } from 'react';
+import Auth from '../auth/auth'
 export default function List(props) {
-  const protect = useContext(LoginContext);
   return (
     <>
       <Card id='item-card' key={props.item.id}>
-        <When condition={protect.authorize('delete')}>
+        <Auth action='delete'>
         <Button fill='true' intent='warning'onClick={() => props.deleteItem(props.item.id)}>Remove</Button>
-        </When>
+        </Auth>
         <div id='items-contents'>
         <p id='item-details'>{props.item.text}</p>
         <p>

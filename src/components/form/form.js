@@ -8,13 +8,11 @@ import {
   ButtonGroup,
 } from '@blueprintjs/core';
 import { useContext } from 'react';
-import { LoginContext } from '../../context/login';
 import { SettingsContext } from '../../context/settings';
 import useForm from '../../hooks/form.js';
-import { When } from 'react-if';
+import Auth from '../auth/auth';
 export default function Form(props) {
   const settings = useContext(SettingsContext);
-  const protect = useContext(LoginContext);
   function toggleDisplay() {
     settings.setDisplay(settings.display ? false : true);
   }
@@ -32,7 +30,7 @@ export default function Form(props) {
       <FormGroup id='form'>
         <Card id='form-card' elevation={Elevation.TWO}>
           <form onSubmit={handleSubmit} id='theForm'>
-              <When condition={protect.authorize('create')}>
+              <Auth action='create'>
             <div id='settings'>
                 <h2>Add To Do Item</h2>
                 <label>
@@ -72,7 +70,7 @@ export default function Form(props) {
                   </label>
                 </div>
             </div>
-              </When>
+              </Auth>
             <div className='displaySettings'>
               <label>
                 <Switch
