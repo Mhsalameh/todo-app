@@ -15,6 +15,8 @@ const ToDo = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [list, setList] = useState(JSON.parse(localStorage.getItem('list'))||[]);
   const [currentList, setCurrentList] = useState(list);
+  const [username,setUserName]=useState('');
+  const [password,setPassword]=useState('');
   
   function addItem(item) {
     item.id = uuid();
@@ -64,6 +66,11 @@ const ToDo = () => {
         setList(list.sort((a, b) => (b.complete ? 1 : -1)));
     }
 
+  }
+
+  function handleLogin(e){
+    e.preventDefault();
+    protect.login(username,password);
   }
 
   useEffect(() => {
@@ -140,6 +147,11 @@ const ToDo = () => {
         </div>
           </Auth>
       </div>
+    <form onSubmit={handleLogin}>
+      <input type='text' placeholder='username' onChange={(e)=> setUserName(e.target.value)}/>
+      <input type='password' placeholder='password' onChange={(e)=>setPassword(e.target.value)}/>
+      <input type='submit' value='login'/>
+    </form>
       <div id='paginate'>
           <ReactPaginate
             breakLabel='...'
